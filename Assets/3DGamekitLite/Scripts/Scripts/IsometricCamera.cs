@@ -7,6 +7,11 @@ public class IsometricCamera : MonoBehaviour
     public Transform target;
     public Vector3 offset;
 
+    private void Awake()
+    {
+        target = FindObjectOfType<Gamekit3D.PlayerControlAlt>().transform;
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {

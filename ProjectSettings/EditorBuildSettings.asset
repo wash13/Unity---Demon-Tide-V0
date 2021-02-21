@@ -8,13 +8,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ExampleScene.unity
     guid: 12dd7bb27c47ea1458c8d4ecd98af2cc
-  - enabled: 1
+  - enabled: 0
     path: 
-    guid: ae827b0911ccdd146ac15e245084bd91
-  - enabled: 1
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: 
-    guid: f80120f566ee76c439ac27443e8f9095
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Mockup.unity
     guid: 723da7180d7aded4f88fdcbc4897927b
+  - enabled: 1
+    path: Assets/Scenes/Board1.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Board2.unity
+    guid: cd1835aa2bea53846bf9090513e4c9d4
+  - enabled: 1
+    path: Assets/Scenes/Board3.unity
+    guid: cc52f26096cb418479485b6b86a0182e
+  - enabled: 1
+    path: Assets/Scenes/Board4.unity
+    guid: 4d9edd0137ea7f44eac2e1943c043dc5
+  - enabled: 1
+    path: Assets/Scenes/Board5.unity
+    guid: ee77ea26fed8fc14f86ae82cbeb1b98d
+  - enabled: 1
+    path: Assets/Scenes/LevelScene.unity
+    guid: 27baef67288d6234f856ef2e258b0c81
   m_configObjects: {}

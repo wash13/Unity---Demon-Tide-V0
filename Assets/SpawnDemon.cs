@@ -4,29 +4,38 @@ using UnityEngine;
 
 public class SpawnDemon : MonoBehaviour
 {
-    public float spawntime = 8f;
-    public float variance = 3f;
-    public GameObject spawns;
-    public int maxActive = 5;
-    private int numSpawned = 0;
+    //public float spawntime = 8f;
+    //public float variance = 3f;
+    //public GameObject spawns;
+    //public int maxActive = 5;
+    //private int numSpawned = 0;
+    public bool working = false;
+    private ParticleSystem portal;
+    public bool stop = false;
 
-
-    private float lastspawn = 0;
+    //private float lastspawn = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        portal = GetComponentInChildren<ParticleSystem>();
+        portal.Stop();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public IEnumerator spawnGroup (GameObject demon, int max, float interval, float timeVariance)
     {
-        if (Time.time > (lastspawn + spawntime) && maxActive >= numSpawned)
+        GetComponentInChildren<ParticleSystem>().Play();
+        Debug.Log("one worker activated");
+        working = true;
+        for (int i = 0; i < max; i++)
         {
-            GameObject spawnedDemon = Instantiate(spawns, transform.position, transform.rotation);
-            lastspawn = Time.time;
-            numSpawned += 1;
+            if (stop) break;
+            GameObject spawnedDemon = Instantiate(demon, transform.position, transform.rotation);
+            spawnedDemon.transform.SetParent(transform);
+            yield return new WaitForSeconds(interval + Random.Range(-timeVariance, timeVariance));
         }
+        working = false;
+        GetComponentInChildren<ParticleSystem>().Stop();
     }
 }

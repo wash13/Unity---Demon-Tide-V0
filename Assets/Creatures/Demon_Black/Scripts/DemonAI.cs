@@ -10,6 +10,12 @@ namespace Gamekit3D
     {
         public EnemyController controller { get { return m_Controller; } }
         //public PlayerController target { get { return m_Target; } }
+        //scale stuff
+        private float dmgScale = 1f;
+        private float hpScale = 1f;
+        private float atkScale = 1f;
+        private float spdScale = 1f;
+
 
         public TargetScannerAlt playerScanner;
         protected PlayerController m_Target = null;
@@ -31,6 +37,7 @@ namespace Gamekit3D
         public RandomAudioPlayer spottedAudio;
         private GameObject target;
 
+        public GameObject scythe;
         public GameObject ragdollPrefab;
         public PlayerControlAlt player;
         public int xpWorth = 9;
@@ -48,13 +55,32 @@ namespace Gamekit3D
             //Debug.Log("got my agent " + myAgent);
             anim.SetInteger("battle", 1);
             weapon = GetComponentInChildren<MeleeWeapon>();
-            weapon.SetOwner(gameObject);
+            weapon.SetOwner(scythe);
+            player = GameObject.Find("arthur_custom").GetComponent<PlayerControlAlt>();
+            scale();
         }
 
         // Update is called once per frame
         void Update()
         {
             if (alive) FindTarget();
+        }
+
+        public void scale()
+        {
+            StatScaling statScale = GameObject.FindObjectOfType<StatScaling>();
+            dmgScale = statScale.damageMod;
+            hpScale = statScale.healthMod;
+            spdScale = statScale.speedMod;
+            atkScale = statScale.attackMod;
+            Damageable damg = GetComponent<Damageable>();
+
+            GetComponentInChildren<MeleeWeapon>().damage = Mathf.RoundToInt(GetComponentInChildren<MeleeWeapon>().damage * dmgScale);
+            damg.maxHitPoints = Mathf.RoundToInt(damg.maxHitPoints * dmgScale);
+            damg.ResetDamage();
+            xpWorth = Mathf.RoundToInt(xpWorth * statScale.xpMod);
+            GetComponent<NavMeshAgent>().speed *= spdScale;
+            modifyAttackSpeed(atkScale);
         }
 
 
@@ -155,6 +181,11 @@ namespace Gamekit3D
             attacking = false;
             anim.SetInteger("moving", 0);
             weapon.EndAttack();
+        }
+
+        public void modifyAttackSpeed(float modifier)
+        {
+            anim.SetFloat("speedMod", modifier);
         }
     }
 }

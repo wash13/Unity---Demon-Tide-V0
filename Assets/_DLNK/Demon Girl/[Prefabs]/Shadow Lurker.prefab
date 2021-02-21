@@ -2202,6 +2202,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  damageAngle: 0
   hitParticlePrefab: {fileID: 0}
   targetLayers:
     serializedVersion: 2
@@ -4211,9 +4212,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScanner:
     heightOffset: 0
-    detectionRadius: 20
+    detectionRadius: 30
     detectionAngle: 360
-    maxHeightDifference: 1
+    maxHeightDifference: 5
     viewBlockerLayerMask:
       serializedVersion: 2
       m_Bits: 0
@@ -4243,7 +4244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMana: 5
   curMana: 0
-  maxHitPoints: 1
+  maxHitPoints: 10
   invulnerabiltyTime: 0
   hitAngle: 360
   hitForwardRotation: 360

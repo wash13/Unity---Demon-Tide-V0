@@ -10,6 +10,15 @@ namespace Gamekit3D
     {
         public EnemyController controller { get { return m_Controller; } }
         //public PlayerController target { get { return m_Target; } }
+        private StatScaling statScale;
+        //private Damageable damg;
+
+        //scale stuff
+        private float dmgScale = 1f;
+        private float hpScale = 1f;
+        private float atkScale = 1f;
+        private float spdScale = 1f;
+
 
         public TargetScannerAlt playerScanner;
         protected PlayerController m_Target = null;
@@ -41,7 +50,7 @@ namespace Gamekit3D
         public int xpWorth = 10;
 
 
-        //private float range;
+      
 
 
         // Start is called before the first frame update
@@ -50,6 +59,10 @@ namespace Gamekit3D
             origin = transform.position;
             myAgent = GetComponent<NavMeshAgent>();
             anim = GetComponent<Animator>();
+            player = GameObject.Find("arthur_custom").GetComponent<PlayerControlAlt>();
+            statScale = FindObjectOfType<StatScaling>();
+            scale();
+            //damg = GetComponent<Damageable>();
             //Debug.Log("got my agent " + myAgent);
             //anim.SetInteger("battle", 1);
             //weapon = GetComponentInChildren<MeleeWeapon>();
@@ -61,6 +74,22 @@ namespace Gamekit3D
         {
             if (shouldTeleport) teleporting();
             if (alive) FindTarget();
+        }
+
+        public void scale()
+        {
+            dmgScale = statScale.damageMod;
+            hpScale = statScale.healthMod;
+            spdScale = statScale.speedMod;
+            atkScale = statScale.attackMod;
+            Damageable damg = GetComponent<Damageable>();
+
+            //fireballPrefab.GetComponentInChildren<MeleeWeapon>().damage = Mathf.RoundToInt(GetComponentInChildren<MeleeWeapon>().damage * dmgScale);
+            damg.maxHitPoints = Mathf.RoundToInt(damg.maxHitPoints * dmgScale);
+            damg.ResetDamage();
+            xpWorth = Mathf.RoundToInt(xpWorth * statScale.xpMod);
+            GetComponent<NavMeshAgent>().speed *= spdScale;
+            modifyAttackSpeed(atkScale);
         }
 
 
@@ -147,6 +176,7 @@ namespace Gamekit3D
                 if (Random.Range(1,3) == 1) attackAudio.PlayRandomClip();
                 GameObject fireballInstance = Instantiate(fireballPrefab, (transform.position + new Vector3(0f, 1f, 0f)), transform.rotation);
                 GameObject targetInstance = Instantiate(targetPrefab, target.transform.position, transform.rotation);
+                fireballInstance.GetComponent<MeleeWeapon>().damage = Mathf.RoundToInt(fireballInstance.GetComponent<MeleeWeapon>().damage * dmgScale);
 
                 fireballInstance.GetComponent<collisionExplode>().setTarget(targetInstance); //this is target circle
                 fireballInstance.GetComponent<ThrowArc>().Targ = target.transform;             //this is target - the player. I didn't think this through
@@ -221,6 +251,12 @@ namespace Gamekit3D
         {
             attacking = false;
             anim.SetInteger("moving", 0);
+        }
+
+
+        public void modifyAttackSpeed(float modifier)
+        {
+            anim.SetFloat("speedMod", modifier);
         }
     }
 }

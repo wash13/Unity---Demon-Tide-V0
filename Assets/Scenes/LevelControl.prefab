@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &254322041779481895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 254322041779481890}
+  - component: {fileID: 254322041779481889}
+  - component: {fileID: 254322041779481888}
+  - component: {fileID: 254322041779481891}
+  m_Layer: 0
+  m_Name: LevelControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &254322041779481890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254322041779481895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -50.928425, y: -499.13873, z: 568.6546}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &254322041779481889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254322041779481895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9cd9b2a9f29bf4ba40ce4abab5b84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &254322041779481888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254322041779481895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bba87c681c2a44287f94b98919abd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthScale: 0.2
+  damageScale: 0.2
+  speedScale: 0.02
+  attackScale: 0.02
+  healthMod: 1
+  damageMod: 1
+  speedMod: 1
+  attackMod: 1
+--- !u!114 &254322041779481891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254322041779481895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a39183320a6b148a06618636cf14c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  spellCost: 0
+  xp: 0
+  level: 0
+  xpToNextLevel: 0
+  xpToLastLevel: 0
+  damage: 0
+  speed: 0
+  cherub: 0
+  penitent: 0
+  chalice: 0
+  thorns: 0
+  manaGain: 0
+  blockAngle: 0

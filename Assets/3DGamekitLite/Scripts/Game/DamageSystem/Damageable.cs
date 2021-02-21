@@ -12,6 +12,8 @@ namespace Gamekit3D
         public int maxMana = 5;
         public int curMana = 0;
 
+
+
         public int maxHitPoints;
         [Tooltip("Time that this gameObject is invulnerable for, after receiving damage.")]
         public float invulnerabiltyTime;
@@ -37,10 +39,12 @@ namespace Gamekit3D
         protected float m_timeSinceLastHit = 0.0f;
         protected Collider m_Collider;
 
+
         System.Action schedule;
 
         void Start()
         {
+
             ResetDamage();
             m_Collider = GetComponent<Collider>();
         }
@@ -58,6 +62,9 @@ namespace Gamekit3D
                 }
             }
         }
+
+
+      
 
         public void ResetDamage()
         {

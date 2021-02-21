@@ -1815,7 +1815,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5024193405952337176}
-  - component: {fileID: 5024193407489480611}
   m_Layer: 0
   m_Name: Demon_arma
   m_TagString: Untagged
@@ -1840,48 +1839,6 @@ Transform:
   m_Father: {fileID: 5024193405952447034}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5024193407489480611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5024193405952018270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdf93605f2b0c0246bbbf722e6208efb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  onHitInvulnerable:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5024193407219345779}
-        m_MethodName: stagger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  hitParticlePrefab: {fileID: 0}
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  attackPoints:
-  - radius: 0.5
-    offset: {x: 0, y: 0, z: 0}
-    attackRoot: {fileID: 5024193405952331532}
-  - radius: 1
-    offset: {x: 0.3, y: 1, z: 0}
-    attackRoot: {fileID: 5024193405952331532}
-  effects: []
-  hitAudio: {fileID: 1108037044}
-  attackAudio: {fileID: 1269104976}
-  success: 0
 --- !u!1 &5024193405952018478
 GameObject:
   m_ObjectHideFlags: 0
@@ -2681,7 +2638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMana: 5
   curMana: 0
-  maxHitPoints: 10
+  maxHitPoints: 20
   invulnerabiltyTime: 0
   hitAngle: 360
   hitForwardRotation: 360
@@ -2752,9 +2709,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScanner:
     heightOffset: 0
-    detectionRadius: 20
+    detectionRadius: 30
     detectionAngle: 360
-    maxHeightDifference: 1
+    maxHeightDifference: 5
     viewBlockerLayerMask:
       serializedVersion: 2
       m_Bits: 2147483648
@@ -2765,6 +2722,7 @@ MonoBehaviour:
   gruntAudio: {fileID: 619038541}
   deathAudio: {fileID: 0}
   spottedAudio: {fileID: 0}
+  scythe: {fileID: 5024193405952121532}
   ragdollPrefab: {fileID: 5444141091646489376, guid: 96882db7aee590649bffe40f875c45e6,
     type: 3}
   player: {fileID: 0}
@@ -3968,6 +3926,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5024193405952345864}
+  - component: {fileID: 885828360}
   m_Layer: 0
   m_Name: Demon_weapon_end
   m_TagString: Untagged
@@ -3989,6 +3948,49 @@ Transform:
   m_Father: {fileID: 5024193405952331532}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &885828360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5024193405952121532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf93605f2b0c0246bbbf722e6208efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  onHitInvulnerable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5024193407219345779}
+        m_MethodName: stagger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  damageAngle: 0
+  hitParticlePrefab: {fileID: 0}
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  attackPoints:
+  - radius: 0.5
+    offset: {x: 0, y: 0, z: 0}
+    attackRoot: {fileID: 5024193405952331532}
+  - radius: 1
+    offset: {x: 0.3, y: 1, z: 0}
+    attackRoot: {fileID: 5024193405952331532}
+  effects: []
+  hitAudio: {fileID: 1108037044}
+  attackAudio: {fileID: 1269104976}
+  success: 0
 --- !u!1 &5024193405952122526
 GameObject:
   m_ObjectHideFlags: 0

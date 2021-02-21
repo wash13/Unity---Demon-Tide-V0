@@ -10,6 +10,12 @@ namespace Gamekit3D
     {
         public EnemyController controller { get { return m_Controller; } }
         //public PlayerController target { get { return m_Target; } }
+        //scale stuff
+        private float dmgScale = 1f;
+        private float hpScale = 1f;
+        private float atkScale = 1f;
+        private float spdScale = 1f;
+
 
         public TargetScannerAlt playerScanner;
         protected PlayerController m_Target = null;
@@ -49,6 +55,8 @@ namespace Gamekit3D
             //anim.SetInteger("battle", 1);
             weapon = GetComponentInChildren<MeleeWeapon>();
             weapon.SetOwner(gameObject);
+            player = GameObject.Find("arthur_custom").GetComponent<PlayerControlAlt>();
+            scale();
         }
 
         // Update is called once per frame
@@ -57,6 +65,22 @@ namespace Gamekit3D
             if (alive) FindTarget();
         }
 
+        public void scale()
+        {
+            StatScaling statScale = GameObject.FindObjectOfType<StatScaling>();
+            dmgScale = statScale.damageMod;
+            hpScale = statScale.healthMod;
+            spdScale = statScale.speedMod;
+            atkScale = statScale.attackMod;
+            Damageable damg = GetComponent<Damageable>();
+
+            GetComponentInChildren<MeleeWeapon>().damage = Mathf.RoundToInt(GetComponentInChildren<MeleeWeapon>().damage * dmgScale);
+            damg.maxHitPoints = Mathf.RoundToInt(damg.maxHitPoints * dmgScale);
+            damg.ResetDamage();
+            xpWorth = Mathf.RoundToInt(xpWorth * statScale.xpMod);
+            GetComponent<NavMeshAgent>().speed *= spdScale;
+            modifyAttackSpeed(atkScale);
+        }
 
         public void FindTarget()
         {
@@ -181,6 +205,16 @@ namespace Gamekit3D
             Debug.Log("ended stagger");
             inStagger = false;
             weapon.EndAttack();
+        }
+
+        public void idleNotAttack()
+        {
+            attacking = false;
+        }
+
+        public void modifyAttackSpeed(float modifier)
+        {
+            anim.SetFloat("speedMod", modifier);
         }
     }
 }

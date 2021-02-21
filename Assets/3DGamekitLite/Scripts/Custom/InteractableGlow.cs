@@ -66,7 +66,7 @@ public class InteractableGlow : MonoBehaviour
         material = GetComponent<Renderer>().material;
         health = GetComponentInParent<Gamekit3D.Damageable>();
         if (health == null) health = GetComponent<Gamekit3D.Damageable>();
-        Debug.Log("got health " + health);
+        //Debug.Log("got health " + health);
         //Debug.Log("got group " + displayGroup);
        
     }

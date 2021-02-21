@@ -11,6 +11,13 @@ namespace Gamekit3D
         public EnemyController controller { get { return m_Controller; } }
         //public PlayerController target { get { return m_Target; } }
 
+        //scale stuff
+        private float dmgScale = 1f;
+        private float hpScale = 1f;
+        private float atkScale = 1f;
+        private float spdScale = 1f;
+
+
         public TargetScannerAlt playerScanner;
         protected PlayerController m_Target = null;
         protected EnemyController m_Controller;
@@ -47,6 +54,7 @@ namespace Gamekit3D
         // Start is called before the first frame update
         void Start()
         {
+            
             origin = transform.position;
             myAgent = GetComponent<NavMeshAgent>();
             anim = GetComponent<Animator>();
@@ -54,14 +62,35 @@ namespace Gamekit3D
             //anim.SetInteger("battle", 1);
             weapon = GetComponentInChildren<MeleeWeapon>();
             weapon.SetOwner(gameObject);
+            scale();
             baseDamage = weapon.damage;
             retreatFrom = transform.position;
+            player = GameObject.Find("arthur_custom").GetComponent<PlayerControlAlt>();
+            goStealth();
         }
 
         // Update is called once per frame
         void Update()
         {
             if (alive) FindTarget();
+        }
+
+        public void scale()
+        {
+            StatScaling statScale = GameObject.FindObjectOfType<StatScaling>();
+
+            dmgScale = statScale.damageMod;
+            hpScale = statScale.healthMod;
+            spdScale = statScale.speedMod;
+            atkScale = statScale.attackMod;
+            Damageable damg = GetComponent<Damageable>();
+
+            GetComponentInChildren<MeleeWeapon>().damage = Mathf.RoundToInt(GetComponentInChildren<MeleeWeapon>().damage * dmgScale);
+            damg.maxHitPoints = Mathf.RoundToInt(damg.maxHitPoints * dmgScale);
+            damg.ResetDamage();
+            xpWorth = Mathf.RoundToInt(xpWorth * statScale.xpMod);
+            GetComponent<NavMeshAgent>().speed *= spdScale;
+            modifyAttackSpeed(atkScale);
         }
 
 
@@ -78,7 +107,7 @@ namespace Gamekit3D
                 goStealth();
                 anim.SetInteger("attacking", 0);
                 anim.SetInteger("moving", 1);
-                myAgent.speed = 4;
+                myAgent.speed = 4 * spdScale;
 
             }
             //Debug.Log("target is " + target);
@@ -101,7 +130,7 @@ namespace Gamekit3D
                 Debug.Log("running");
                 myAgent.SetDestination(transform.position - target.transform.position);
                 anim.SetInteger("moving", 2);
-                myAgent.speed = 8;
+                myAgent.speed = 8 * spdScale;
             }
            
 
@@ -114,7 +143,7 @@ namespace Gamekit3D
                     //Debug.Log(target.transform.position);
                     myAgent.SetDestination(target.transform.position);
                     anim.SetInteger("moving", 1);
-                    myAgent.speed = 4;
+                    myAgent.speed = 4 * spdScale;
                 }
 
                 //case for out of stealth and not retreating
@@ -123,7 +152,7 @@ namespace Gamekit3D
                     //Debug.Log(target.transform.position);
                     myAgent.SetDestination(target.transform.position);
                     anim.SetInteger("moving", 2);
-                    myAgent.speed = 8;
+                    myAgent.speed = 8 *spdScale;
                 }
 
                 //last possible case //wasn't working when invoked while in range
@@ -156,7 +185,7 @@ namespace Gamekit3D
                     unStealth();
                     anim.SetInteger("attacking", 1);
                     anim.SetInteger("moving", 0);
-                    weapon.damage = Mathf.CeilToInt(baseDamage * backstabMultiplier);
+                    weapon.damage = Mathf.CeilToInt(baseDamage * backstabMultiplier * dmgScale);
                     weapon.hitAudio = backstabAudio;
                     if (Random.Range(1, 3) == 1) laughAudio.PlayRandomClip();
                 }
@@ -167,7 +196,7 @@ namespace Gamekit3D
                     if (myAgent.velocity != Vector3.zero) myAgent.SetDestination(transform.position);
                     Debug.Log("should now be attacking 2");
 
-                    weapon.damage = baseDamage;
+                    weapon.damage = Mathf.RoundToInt(baseDamage * dmgScale);
                     weapon.hitAudio = weaponAudio;
                     anim.SetInteger("moving", 0);
                     anim.SetInteger("attacking", 2);
@@ -299,6 +328,11 @@ namespace Gamekit3D
             attacking = false;
             anim.SetInteger("moving", 0);
             anim.SetInteger("attacking", 0);
+        }
+
+        public void modifyAttackSpeed(float modifier)
+        {
+            anim.SetFloat("speedMod", modifier);
         }
     }
 }

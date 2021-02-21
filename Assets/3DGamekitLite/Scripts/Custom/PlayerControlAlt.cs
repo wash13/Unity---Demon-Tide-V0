@@ -18,6 +18,7 @@ namespace Gamekit3D
         public RandomAudioPlayer emoteJumpPlayer;
         public AudioSource slamSound;
         public AudioSource blockSound;
+        public AudioSource levelSound;
 
         private NavMeshAgent myAgent;
         private Animator anim;
@@ -36,12 +37,19 @@ namespace Gamekit3D
         public GameObject manaBar;
         public int spellCost = 2;
         private bool manaReady = false;
+        public GameObject worldControl;
 
         //experience stuff
-        private int xp = 0;
-        private int xpToNextLevel = 100; //doing level increase as fibonacci x 100
-        private int xpToLastLevel = 100;
+        public int xp = 200;
+        private int xpToNextLevel = 300; //doing level increase as fibonacci x 100
+        private int xpToLastLevel = 200;
         public int level = 1;
+        public bool leveled = false;
+
+        private playerStats stats;
+
+        
+
 
 
         // Start is called before the first frame update
@@ -58,6 +66,7 @@ namespace Gamekit3D
             healthBar = GameObject.Find("health fill");
             manaBar = GameObject.Find("mana fill");
             manaBar.GetComponent<Image>().fillAmount = ((float)dam.curMana / (float)dam.maxMana);
+            //stats = FindObjectOfType<playerStats>();
         }
 
         // Update is called once per frame
@@ -203,6 +212,42 @@ namespace Gamekit3D
         }
 
 
+        public void packStats()
+        {
+            stats = FindObjectOfType<playerStats>();
+            dam = GetComponent<Damageable>();
+            weapon = GetComponentInChildren<MeleeWeapon>();
+            myAgent = GetComponent<NavMeshAgent>();
+
+            stats = FindObjectOfType<playerStats>();
+            stats.hp = dam.maxHitPoints;
+            stats.spellCost = spellCost;
+            stats.xp = xp;
+            stats.level = level;
+            stats.xpToNextLevel = xpToNextLevel;
+            stats.xpToLastLevel = xpToLastLevel;
+            stats.damage = weapon.damage;
+            stats.speed = myAgent.speed;           
+        }
+
+        public void unpackStats()
+        {
+            stats = FindObjectOfType<playerStats>();
+            dam = GetComponent<Damageable>();
+            weapon = GetComponentInChildren<MeleeWeapon>();
+            myAgent = GetComponent<NavMeshAgent>();
+
+            Debug.Log("stat unpack " + stats);
+            Debug.Log("damagable " + dam);
+            dam.maxHitPoints = stats.hp;
+            spellCost = stats.spellCost;
+            xp = stats.xp;
+            level = stats.level;
+            xpToNextLevel = stats.xpToNextLevel;
+            xpToLastLevel = stats.xpToLastLevel;
+            weapon.damage = stats.damage;
+            myAgent.speed = stats.speed;
+        }
 
         ///// Stuff for damagable event calls
 
@@ -230,16 +275,28 @@ namespace Gamekit3D
         public void awardXp(int amount)
         {
             xp = xp + amount;
-            if (xp > xpToNextLevel)
+            if (xp > xpToNextLevel && !leveled)
             {
+                xp = xpToNextLevel;
                 level++;
                 int temp = xpToNextLevel;
                 xpToNextLevel = xpToNextLevel + xpToLastLevel;
                 xpToLastLevel = temp;
+                leveled = true;
+                gameObject.GetComponentInChildren<ParticleSystem>().Play();
+                //Debug.Log(levelSound);
+                levelSound.Play();
             }
         }
 
-
+        public void levelUp()
+        {
+                level++;
+                int temp = xpToNextLevel;
+                xpToNextLevel = xpToNextLevel + xpToLastLevel;
+                xpToLastLevel = temp;
+            
+        }
 
         /// <summary>
         /// This is stuff for use with animation events
@@ -293,6 +350,11 @@ namespace Gamekit3D
             GameObject boltInstance = Instantiate(bolt, transform.position, transform.rotation);
             //Debug.Log(boltInstance);
             boltInstance.GetComponent<Rigidbody>().AddRelativeForce(0, 0, 500);
+        }
+
+        public bool checkAlive()
+        {
+            return alive;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Gamekit3D
     {
         public int damage = 1;
         public UnityEvent onHitInvulnerable;
+        public int damageAngle = 0;
 
         [System.Serializable]
         public class AttackPoint
