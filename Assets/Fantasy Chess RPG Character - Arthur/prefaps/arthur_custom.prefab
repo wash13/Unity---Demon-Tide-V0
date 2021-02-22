@@ -9203,7 +9203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMana: 5
   curMana: 0
-  maxHitPoints: 10
+  maxHitPoints: 25
   invulnerabiltyTime: 0
   hitAngle: 360
   hitForwardRotation: 179
@@ -9297,9 +9297,14 @@ MonoBehaviour:
   targetCanvas: {fileID: 0}
   healthBar: {fileID: 0}
   manaBar: {fileID: 0}
+  xpBar: {fileID: 0}
   spellCost: 2
+  manaGain: 1
+  blockAngle: 120
   worldControl: {fileID: 0}
+  xp: 200
   level: 1
+  leveled: 0
 --- !u!54 &1304692741
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9308,13 +9313,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2366975103223773007}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &2366975103223773009
 GameObject:
@@ -9606,12 +9611,12 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d2d3f33aea96bf342baf5112d569f17c, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 0
+  Spatialize: 1
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
@@ -9651,7 +9656,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

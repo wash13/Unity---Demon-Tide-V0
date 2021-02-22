@@ -2726,7 +2726,7 @@ MonoBehaviour:
   ragdollPrefab: {fileID: 5444141091646489376, guid: 96882db7aee590649bffe40f875c45e6,
     type: 3}
   player: {fileID: 0}
-  xpWorth: 9
+  xpWorth: 30
 --- !u!1 &5024193405952077992
 GameObject:
   m_ObjectHideFlags: 0

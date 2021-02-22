@@ -11,8 +11,8 @@ namespace Gamekit3D
         public GameObject shadowDemon;
         public GameObject hellBones;
 
-        public float interval = 30;
-        public int simultaneous = 2;
+        public float interval = 15;
+        public int simultaneous = 4;
         private SpawnDemon[] workers;
         public bool working = true;
 
@@ -38,7 +38,7 @@ namespace Gamekit3D
                 for (int i = 0; i < simultaneous; i++)
                 {
                     Debug.Log("one call to control spawn");
-                    StartCoroutine(workers[Random.Range(0, workers.Length)].spawnGroup(lesserDemon, 5, 2f, .5f));
+                    StartCoroutine(workers[Random.Range(0, workers.Length)].spawnGroup(lesserDemon, 2, 2f, .5f));
                 }
                 yield return new WaitForSeconds(interval);
             }

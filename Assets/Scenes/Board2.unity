@@ -1213,7 +1213,7 @@ PrefabInstance:
     - target: {fileID: 6630682860314755331, guid: e021218385028aa4e83efd69b50a8e2e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -207
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6630682860324513722, guid: e021218385028aa4e83efd69b50a8e2e,
         type: 3}
@@ -1228,10 +1228,16 @@ PrefabInstance:
     - target: {fileID: 6630682860844340839, guid: e021218385028aa4e83efd69b50a8e2e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -207
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e021218385028aa4e83efd69b50a8e2e, type: 3}
+--- !u!1 &252334992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1624614792, guid: e021218385028aa4e83efd69b50a8e2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 252334991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &255984379
 GameObject:
   m_ObjectHideFlags: 0
@@ -9015,6 +9021,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8256443729308204359, guid: 3da3d21948060a549853d533a139e1ef,
         type: 3}
+      propertyPath: xpBar
+      value: 
+      objectReference: {fileID: 252334992}
+    - target: {fileID: 8256443729308204359, guid: 3da3d21948060a549853d533a139e1ef,
+        type: 3}
       propertyPath: manaBar
       value: 
       objectReference: {fileID: 1224663336}
@@ -10048,6 +10059,10 @@ PrefabInstance:
     - target: {fileID: 101910, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_Layer
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 101910, guid: 663177e7db344bd692306990641ca5e1, type: 3}
+      propertyPath: m_TagString
+      value: button
       objectReference: {fileID: 0}
     - target: {fileID: 143466, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_Layer

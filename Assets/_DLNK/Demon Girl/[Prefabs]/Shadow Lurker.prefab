@@ -4228,7 +4228,7 @@ MonoBehaviour:
   ragdollPrefab: {fileID: 1919131083520288203, guid: 937964e8a042c274c91ac6c08f6d4038,
     type: 3}
   player: {fileID: 0}
-  xpWorth: 8
+  xpWorth: 12
   backstabMultiplier: 2
 --- !u!114 &5848541156017475735
 MonoBehaviour:

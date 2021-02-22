@@ -2522,7 +2522,7 @@ MonoBehaviour:
   ragdollPrefab: {fileID: 3592170468124703472, guid: ad1848bafb3df294894ff8ea45b3f5ae,
     type: 3}
   player: {fileID: 0}
-  xpWorth: 4
+  xpWorth: 8
 --- !u!195 &8462225139085338914
 NavMeshAgent:
   m_ObjectHideFlags: 0

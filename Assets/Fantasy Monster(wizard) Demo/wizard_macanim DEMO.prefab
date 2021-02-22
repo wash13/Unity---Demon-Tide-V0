@@ -16411,7 +16411,7 @@ MonoBehaviour:
   targetPrefab: {fileID: 2748759370855456527, guid: 60140aee8cca2c94ba9a7734d5bf3135,
     type: 3}
   player: {fileID: 0}
-  xpWorth: 10
+  xpWorth: 20
 --- !u!114 &5406220018899278488
 MonoBehaviour:
   m_ObjectHideFlags: 0

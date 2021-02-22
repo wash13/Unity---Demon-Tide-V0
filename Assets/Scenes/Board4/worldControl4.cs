@@ -71,7 +71,7 @@ namespace Gamekit3D
             spawnSystem.stop();
             reset.transform.localScale = new Vector3(0, 2, 1);
             scaleControl.resetScale();
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(0);
         }
 
         public void nextBoard()
@@ -81,7 +81,7 @@ namespace Gamekit3D
             //reset.transform.localScale = new Vector3(0, 2, 1);
             player.GetComponent<PlayerControlAlt>().packStats();
             scaleControl.scale();
-            SceneManager.LoadScene(7);
+            SceneManager.LoadScene(6);
         }
 
     }

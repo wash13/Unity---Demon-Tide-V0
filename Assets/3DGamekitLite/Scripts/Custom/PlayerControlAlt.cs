@@ -35,7 +35,10 @@ namespace Gamekit3D
         private bool moveToHit = false; //this is checking if an attack is queued
         public GameObject healthBar;
         public GameObject manaBar;
+        public GameObject xpBar;
         public int spellCost = 2;
+        public int manaGain = 1;
+        public float blockAngle = 120;
         private bool manaReady = false;
         public GameObject worldControl;
 
@@ -208,6 +211,7 @@ namespace Gamekit3D
         public float DistanceToTarget(InteractableGlow target)
         {
             if (target == null) return 100; //anything over a small number causes movement
+            if (target.tag == "button") return 100;
             return Vector3.Distance(transform.position, target.transform.position);
         }
 
@@ -227,7 +231,9 @@ namespace Gamekit3D
             stats.xpToNextLevel = xpToNextLevel;
             stats.xpToLastLevel = xpToLastLevel;
             stats.damage = weapon.damage;
-            stats.speed = myAgent.speed;           
+            stats.speed = myAgent.speed;
+            stats.manaGain = manaGain;
+            stats.blockAngle = blockAngle;
         }
 
         public void unpackStats()
@@ -240,6 +246,7 @@ namespace Gamekit3D
             Debug.Log("stat unpack " + stats);
             Debug.Log("damagable " + dam);
             dam.maxHitPoints = stats.hp;
+            dam.ResetDamage();
             spellCost = stats.spellCost;
             xp = stats.xp;
             level = stats.level;
@@ -247,6 +254,8 @@ namespace Gamekit3D
             xpToLastLevel = stats.xpToLastLevel;
             weapon.damage = stats.damage;
             myAgent.speed = stats.speed;
+            manaGain = stats.manaGain;
+            blockAngle = stats.blockAngle;
         }
 
         ///// Stuff for damagable event calls
@@ -260,7 +269,7 @@ namespace Gamekit3D
         {
             if (manaReady) //this is to limit mana gain.  one gain per use of shield
             {
-                dam.curMana += amount;
+                dam.curMana += manaGain; //used to be amount, hunt that loose end down later
                 if (dam.curMana > dam.maxMana) dam.curMana = dam.maxMana;
                 manaBar.GetComponent<Image>().fillAmount = ((float)dam.curMana / (float)dam.maxMana);
                 manaReady = false;
@@ -275,6 +284,7 @@ namespace Gamekit3D
         public void awardXp(int amount)
         {
             xp = xp + amount;
+
             if (xp > xpToNextLevel && !leveled)
             {
                 xp = xpToNextLevel;
@@ -287,6 +297,8 @@ namespace Gamekit3D
                 //Debug.Log(levelSound);
                 levelSound.Play();
             }
+            //Debug.Log(((xp - xpToLastLevel) / xpToNextLevel));
+            xpBar.GetComponent<Slider>().value = ((float) (xp - xpToLastLevel) / (float) (xpToNextLevel - xpToLastLevel));
         }
 
         public void levelUp()
@@ -307,7 +319,7 @@ namespace Gamekit3D
         {
             myAgent.SetDestination(transform.position);
             isBlocking = true;
-            dam.hitAngle = 200;
+            dam.hitAngle = (360 - blockAngle);
         }
 
         public void endBlock()

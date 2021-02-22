@@ -29,11 +29,7 @@ public class levelMgainVal : MonoBehaviour
             source.manaGain += 1;
             toggle = true;
         }
-        else
-        {
-            source.manaGain -= 1;
-            toggle = false;
-        }
+       
     }
 
     public void off()

@@ -29,11 +29,7 @@ public class levelDamageVal : MonoBehaviour
             source.damage += 2;
             toggle = true;
         }
-        else
-        {
-            source.damage -= 2;
-            toggle = false;
-        }
+        
     }
 
     public void off()

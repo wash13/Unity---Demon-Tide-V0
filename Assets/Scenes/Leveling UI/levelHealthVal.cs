@@ -29,11 +29,7 @@ public class levelHealthVal : MonoBehaviour
             source.hp += 5;
             toggle = true;
         }
-        else
-        {
-            source.hp -= 5;
-            toggle = false;
-        }
+        
     }
 
     public void off()

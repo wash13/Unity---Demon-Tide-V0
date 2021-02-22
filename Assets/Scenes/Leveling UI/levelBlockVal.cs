@@ -31,11 +31,7 @@ namespace Gamekit3D
                 source.blockAngle += 5f;
                 toggle = true;
             }
-            else
-            {
-                source.blockAngle -= 5f;
-                toggle = false;
-            }
+            
         }
 
         public void off()

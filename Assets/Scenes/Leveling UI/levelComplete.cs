@@ -11,12 +11,12 @@ public class levelComplete : MonoBehaviour
     void Start()
     {
         level = FindObjectOfType<playerStats>().level;
-        if (level > 6) level = 6;
+        if (level > 5) level = 5;
     }
 
     public void complete()
     {
-        SceneManager.LoadScene(level + 1);
+        SceneManager.LoadScene(level);
     }
 
     public void selected()

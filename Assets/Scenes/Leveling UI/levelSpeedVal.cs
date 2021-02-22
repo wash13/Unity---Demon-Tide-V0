@@ -29,11 +29,7 @@ public class levelSpeedVal : MonoBehaviour
             source.speed += .2f;
             toggle = true;
         }
-        else
-        {
-            source.speed -= .2f;
-            toggle = false;
-        }
+        
     }
 
     public void off()
