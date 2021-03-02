@@ -1262,10 +1262,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5024193405952381060}
   - component: {fileID: 5024193405948894134}
-  - component: {fileID: 5024193407467762392}
   - component: {fileID: 5024193407467762398}
-  - component: {fileID: 5024193407467762399}
-  m_Layer: 0
+  - component: {fileID: 1045850430}
+  m_Layer: 13
   m_Name: Demon_Black
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1395,19 +1394,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.15012056, y: 0.16685528, z: -1.2753251}
     m_Extent: {x: 1.0668812, y: 0.846669, z: 1.3934193}
   m_DirtyAABB: 0
---- !u!65 &5024193407467762392
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5024193405952001170}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.1337714, y: 2.7868464, z: 1.6933389}
-  m_Center: {x: -0.15011641, y: 1.2753255, z: -0.21716918}
 --- !u!114 &5024193407467762398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1420,20 +1406,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10496eaa828436d41aa336210fcf5244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lorename: 
---- !u!114 &5024193407467762399
-MonoBehaviour:
+  lorename: Scythe Demon
+--- !u!136 &1045850430
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5024193405952001170}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1ff80f568f363d4f9ebdf780546e255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayGroup: {fileID: 0}
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &5024193405952001830
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,7 +2625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMana: 5
   curMana: 0
-  maxHitPoints: 20
+  maxHitPoints: 200
   invulnerabiltyTime: 0
   hitAngle: 360
   hitForwardRotation: 360
@@ -3960,7 +3947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf93605f2b0c0246bbbf722e6208efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 50
   onHitInvulnerable:
     m_PersistentCalls:
       m_Calls:

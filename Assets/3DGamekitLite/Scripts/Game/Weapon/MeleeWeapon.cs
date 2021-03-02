@@ -43,6 +43,7 @@ namespace Gamekit3D
         }
 
         public bool success = false;
+        List<GameObject> targetsHit = new List<GameObject>();
 
         protected GameObject m_Owner;
 
@@ -85,6 +86,7 @@ namespace Gamekit3D
 
         public void BeginAttack(bool thowingAttack)
         {
+            targetsHit.Clear();
             if (attackAudio != null)
                 attackAudio.PlayRandomClip();
             throwingHit = thowingAttack;
@@ -125,7 +127,7 @@ namespace Gamekit3D
             {
                 for (int i = 0; i < attackPoints.Length; ++i)
                 {
-                    if (success) break;
+                    //if (success) break;
 
                     AttackPoint pts = attackPoints[i];
 
@@ -180,7 +182,8 @@ namespace Gamekit3D
                 return false;
             }
 
-
+            if (targetsHit.Contains(d.gameObject)) return false;
+            targetsHit.Add(d.gameObject);
             
 
 
@@ -200,7 +203,7 @@ namespace Gamekit3D
             data.amount = damage;
             data.damager = this;
             data.direction = m_Direction.normalized;
-            Debug.Log("this is " + m_Owner);
+            //Debug.Log("this is " + m_Owner);
             data.damageSource = m_Owner.transform.position;
             data.throwing = m_IsThrowingHit;
             data.stopCamera = false;

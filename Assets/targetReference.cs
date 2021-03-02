@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class targetReference : MonoBehaviour
 {
-    public InteractableGlow target;
+    public GameObject target;
 
     // Start is called before the first frame update
     void Start()

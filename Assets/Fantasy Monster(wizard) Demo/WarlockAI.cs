@@ -84,6 +84,7 @@ namespace Gamekit3D
             atkScale = statScale.attackMod;
             Damageable damg = GetComponent<Damageable>();
 
+            GetComponentInChildren<MeleeWeapon>().damage = Mathf.RoundToInt(GetComponentInChildren<MeleeWeapon>().damage * dmgScale);
             //fireballPrefab.GetComponentInChildren<MeleeWeapon>().damage = Mathf.RoundToInt(GetComponentInChildren<MeleeWeapon>().damage * dmgScale);
             damg.maxHitPoints = Mathf.RoundToInt(damg.maxHitPoints * dmgScale);
             damg.ResetDamage();
@@ -176,7 +177,8 @@ namespace Gamekit3D
                 if (Random.Range(1,3) == 1) attackAudio.PlayRandomClip();
                 GameObject fireballInstance = Instantiate(fireballPrefab, (transform.position + new Vector3(0f, 1f, 0f)), transform.rotation);
                 GameObject targetInstance = Instantiate(targetPrefab, target.transform.position, transform.rotation);
-                fireballInstance.GetComponent<MeleeWeapon>().damage = Mathf.RoundToInt(fireballInstance.GetComponent<MeleeWeapon>().damage * dmgScale);
+                //fireballInstance.GetComponent<MeleeWeapon>().damage = Mathf.RoundToInt(fireballInstance.GetComponent<MeleeWeapon>().damage * dmgScale);
+                fireballInstance.GetComponent<MeleeWeapon>().damage = GetComponentInChildren<MeleeWeapon>().damage; //added a dummy weapon, now scales off that
 
                 fireballInstance.GetComponent<collisionExplode>().setTarget(targetInstance); //this is target circle
                 fireballInstance.GetComponent<ThrowArc>().Targ = target.transform;             //this is target - the player. I didn't think this through

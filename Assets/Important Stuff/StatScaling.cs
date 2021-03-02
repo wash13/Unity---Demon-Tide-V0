@@ -37,8 +37,8 @@ namespace Gamekit3D
         {
             healthMod += healthScale;
             damageMod += damageScale;
-            speedMod -= speedScale;
-            attackMod -= attackScale;
+            speedMod += speedScale;
+            attackMod += attackScale;
             xpMod += xpScale;
         }
 

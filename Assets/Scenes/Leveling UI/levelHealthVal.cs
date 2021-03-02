@@ -26,7 +26,7 @@ public class levelHealthVal : MonoBehaviour
     {
         if (!toggle)
         {
-            source.hp += 5;
+            source.hp += 50;
             toggle = true;
         }
         
@@ -36,7 +36,7 @@ public class levelHealthVal : MonoBehaviour
     {
         if (toggle)
         {
-            source.hp -= 5;
+            source.hp -= 50;
             toggle = false;
         }
     }

@@ -26,7 +26,7 @@ public class levelDamageVal : MonoBehaviour
     {
         if (!toggle)
         {
-            source.damage += 2;
+            source.damage += 10;
             toggle = true;
         }
         
@@ -36,7 +36,7 @@ public class levelDamageVal : MonoBehaviour
     {
         if (toggle)
         {
-            source.damage -= 2;
+            source.damage -= 10;
             toggle = false;
         }
     }

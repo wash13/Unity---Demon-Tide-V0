@@ -1197,10 +1197,9 @@ GameObject:
   - component: {fileID: 5847359497257263684}
   - component: {fileID: 5822511478952952086}
   - component: {fileID: 1001660200392124}
-  - component: {fileID: 1001660200392125}
   - component: {fileID: 1001660200392126}
   - component: {fileID: 424197151501629899}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: DG_SKIN_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1339,19 +1338,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lorename: Shadow Lurker
---- !u!114 &1001660200392125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5848414708316249178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1ff80f568f363d4f9ebdf780546e255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayGroup: {fileID: 0}
 --- !u!114 &1001660200392126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,7 +2173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf93605f2b0c0246bbbf722e6208efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 10
   onHitInvulnerable:
     m_PersistentCalls:
       m_Calls:
@@ -4244,7 +4230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMana: 5
   curMana: 0
-  maxHitPoints: 10
+  maxHitPoints: 100
   invulnerabiltyTime: 0
   hitAngle: 360
   hitForwardRotation: 360

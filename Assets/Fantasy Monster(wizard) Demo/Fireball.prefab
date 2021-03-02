@@ -10034,10 +10034,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf93605f2b0c0246bbbf722e6208efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 3
   onHitInvulnerable:
     m_PersistentCalls:
       m_Calls: []
+  damageAngle: 0
   hitParticlePrefab: {fileID: 0}
   targetLayers:
     serializedVersion: 2

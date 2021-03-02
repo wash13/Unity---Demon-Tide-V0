@@ -26,7 +26,7 @@ public class SpawnDemon : MonoBehaviour
     public IEnumerator spawnGroup (GameObject demon, int max, float interval, float timeVariance)
     {
         GetComponentInChildren<ParticleSystem>().Play();
-        Debug.Log("one worker activated");
+        //Debug.Log("one worker activated");
         working = true;
         for (int i = 0; i < max; i++)
         {

@@ -5424,10 +5424,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5406841331717515106}
   - component: {fileID: 5395445119089325232}
-  - component: {fileID: 4581257695884361140}
   - component: {fileID: 2429779742815488193}
   - component: {fileID: 1000014069688169}
-  m_Layer: 0
+  - component: {fileID: 5491440839091806009}
+  m_Layer: 13
   m_Name: Mesh_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5561,19 +5561,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.21192348, y: -0.33750087, z: -0.08425987}
     m_Extent: {x: 3.0459833, y: 1.3647199, z: 1.9958102}
   m_DirtyAABB: 0
---- !u!114 &4581257695884361140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5405812651222751048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1ff80f568f363d4f9ebdf780546e255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayGroup: {fileID: 0}
 --- !u!114 &2429779742815488193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5601,6 +5588,32 @@ CapsuleCollider:
   m_Height: 10
   m_Direction: 2
   m_Center: {x: 0.08426034, y: 0.33750072, z: 2.6263947}
+--- !u!114 &5491440839091806009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5405812651222751048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf93605f2b0c0246bbbf722e6208efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 30
+  onHitInvulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+  damageAngle: 0
+  hitParticlePrefab: {fileID: 0}
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  attackPoints: []
+  effects: []
+  hitAudio: {fileID: 0}
+  attackAudio: {fileID: 0}
+  success: 0
 --- !u!1 &5405812651238593304
 GameObject:
   m_ObjectHideFlags: 0
@@ -16426,7 +16439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMana: 5
   curMana: 0
-  maxHitPoints: 15
+  maxHitPoints: 150
   invulnerabiltyTime: 0
   hitAngle: 360
   hitForwardRotation: 360

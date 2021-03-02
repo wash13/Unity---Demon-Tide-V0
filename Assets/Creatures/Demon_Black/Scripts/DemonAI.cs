@@ -26,6 +26,7 @@ namespace Gamekit3D
         private bool alive = true;
         private MeleeWeapon weapon;
         bool attacking = false;
+        bool interruptable = false;
 
         //sound
         public RandomAudioPlayer attackAudio;
@@ -131,6 +132,11 @@ namespace Gamekit3D
                     //ApplyDamage((Damageable.DamageMessage)msg);
                     //Debug.Log("demon hurt");
                     if (hitAudio != null) hitAudio.PlayRandomClip();
+                    if (interruptable)
+                    {
+                        interruptable = false;
+                        interruptHit();
+                    }
                     break;
                 default:
                     break;
@@ -166,6 +172,28 @@ namespace Gamekit3D
         {
             if (stepAudio != null) stepAudio.Play();
         }
+
+        public void interruptHit()
+        {
+            attacking = false;
+            //inStagger = true;
+            anim.SetBool("interrupt", true);
+            anim.SetInteger("attacking", 0);
+            //Debug.Log("demon state is  " + anim.GetInteger("moving"));
+            weapon.EndAttack();
+        }
+
+        public void setInterruptable(int set)
+        {
+            interruptable = (set == 1);
+            Debug.Log("interruptable is " + interruptable);
+        }
+
+        public void endInterrupt()
+        {
+            anim.SetBool("interrupt", false);
+        }
+
 
         public void stagger()
         {

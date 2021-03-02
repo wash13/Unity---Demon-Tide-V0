@@ -1090,6 +1090,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 255984380}
     m_Modifications:
+    - target: {fileID: 2086987947, guid: e021218385028aa4e83efd69b50a8e2e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6630682859438175058, guid: e021218385028aa4e83efd69b50a8e2e,
         type: 3}
       propertyPath: m_Name
@@ -10152,7 +10156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 101910, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_Layer
-      value: 16
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 101910, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_TagString
@@ -10160,15 +10164,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 143466, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_Layer
-      value: 16
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 175936, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_Layer
-      value: 16
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 192056, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_Layer
-      value: 16
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 401910, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_RootOrder
@@ -10229,6 +10233,14 @@ PrefabInstance:
     - target: {fileID: 6588870, guid: 663177e7db344bd692306990641ca5e1, type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713344255, guid: 663177e7db344bd692306990641ca5e1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 241492112}
+    - target: {fileID: 713344255, guid: 663177e7db344bd692306990641ca5e1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: nextBoard
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 663177e7db344bd692306990641ca5e1, type: 3}

@@ -14,26 +14,27 @@ public class InteractableGlow : MonoBehaviour
 
     private Gamekit3D.Damageable health;
 
-    private void OnMouseEnter()
+    private void OnMouseOver()
     {
         //Debug.Log("entered");
         //original = material.color;
         //material.color = Color.yellow;
-        material.EnableKeyword("_EMISSION");
-        displayGroup.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1); ;
-        float temp = 0;
-        if (health != null) temp = ((float)health.currentHitPoints / (float)health.maxHitPoints);
+        //material.EnableKeyword("_EMISSION");
+        displayGroup.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         //Debug.Log(temp);
         if (health != null) displayGroup.GetComponent<Slider>().value = ((float)health.currentHitPoints / (float)health.maxHitPoints);
         displayName.GetComponent<Text>().text = abt.lorename;
-        displayGroup.GetComponent<targetReference>().target = this;
+        displayGroup.GetComponent<targetReference>().target = this.gameObject;
         
     }
 
+    /*
     private void OnMouseOver()
     {
         if (health != null) displayGroup.GetComponent<Slider>().value = ((float)health.currentHitPoints / (float)health.maxHitPoints);
+        displayGroup.GetComponent<targetReference>().target = this;
     }
+    */
 
     private void OnDestroy()
     {
@@ -45,9 +46,11 @@ public class InteractableGlow : MonoBehaviour
         }
     }
 
+    
     private void OnMouseExit()
     {
-        //Debug.Log("exited");
+
+        Debug.Log("exited");
         //material.color = original;
         material.DisableKeyword("_EMISSION");
         //displayName.GetComponent<Text>().text = "";
@@ -55,10 +58,12 @@ public class InteractableGlow : MonoBehaviour
         displayGroup.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
         displayGroup.GetComponent<targetReference>().target = null;
     }
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        Physics.queriesHitTriggers = true;
         displayName = GameObject.Find("TargetText");
         //displayBar = GameObject.Find("front bar");
         displayGroup = GameObject.Find("target bar");
@@ -69,5 +74,10 @@ public class InteractableGlow : MonoBehaviour
         //Debug.Log("got health " + health);
         //Debug.Log("got group " + displayGroup);
        
+    }
+
+    private void Update()
+    {
+
     }
 }

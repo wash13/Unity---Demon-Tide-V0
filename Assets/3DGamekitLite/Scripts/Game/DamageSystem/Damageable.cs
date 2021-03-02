@@ -134,7 +134,7 @@ namespace Gamekit3D
             //Debug.Log("message is " + messageType);
             for (var i = 0; i < onDamageMessageReceivers.Count; ++i)
             {
-                Debug.Log("messageType: " + messageType + " this " + this + " data " + data);
+                //Debug.Log("messageType: " + messageType + " this " + this + " data " + data);
                 var receiver = onDamageMessageReceivers[i] as IMessageReceiver;
                 receiver.OnReceiveMessage(messageType, this, data);
                 //Debug.Log("one message");

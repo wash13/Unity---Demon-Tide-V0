@@ -18,7 +18,7 @@ namespace Gamekit3D
             origin = transform.position;
             wep = GetComponent<MeleeWeapon>();
             wep.SetOwner(gameObject);
-            wep.BeginAttack(true);
+            wep.BeginAttack(false);
         }
 
     

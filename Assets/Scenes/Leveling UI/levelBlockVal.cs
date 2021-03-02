@@ -28,7 +28,7 @@ namespace Gamekit3D
         {
             if (!toggle)
             {
-                source.blockAngle += 5f;
+                source.blockAngle += 10f;
                 toggle = true;
             }
             
@@ -38,7 +38,7 @@ namespace Gamekit3D
         {
             if (toggle)
             {
-                source.blockAngle -= 5f;
+                source.blockAngle -= 10f;
                 toggle = false;
             }
         }

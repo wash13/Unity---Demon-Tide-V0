@@ -37,7 +37,7 @@ namespace Gamekit3D
             {
                 for (int i = 0; i < simultaneous; i++)
                 {
-                    Debug.Log("one call to control spawn");
+                    //Debug.Log("one call to control spawn");
                     StartCoroutine(workers[Random.Range(0, workers.Length)].spawnGroup(lesserDemon, 2, 2f, .5f));
                 }
                 yield return new WaitForSeconds(interval);

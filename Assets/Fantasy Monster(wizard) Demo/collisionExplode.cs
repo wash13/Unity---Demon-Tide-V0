@@ -26,7 +26,7 @@ public class collisionExplode : MonoBehaviour
     private IEnumerator OnTriggerEnter(Collider target)
     {
         Debug.Log("fireball hit " + target);
-        if (target.gameObject.layer != 23 && target.gameObject.layer != 0)
+        if (target.gameObject.layer != 23 && target.gameObject.layer != 0 && target.gameObject.layer != 13)
         {
             gameObject.GetComponent<SphereCollider>().enabled = false;
             gameObject.GetComponent<MeshRenderer>().enabled = false;

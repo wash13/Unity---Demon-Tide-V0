@@ -6,17 +6,20 @@ using UnityEngine.UI;
 
 public class levelComplete : MonoBehaviour
 {
-    int level;
+
+    playerStats source;
     // Start is called before the first frame update
     void Start()
     {
-        level = FindObjectOfType<playerStats>().level;
-        if (level > 5) level = 5;
+        source = FindObjectOfType<playerStats>();
+        if (source.level > 5) source.level = 5;
     }
 
     public void complete()
     {
-        SceneManager.LoadScene(level);
+        source.hp = Mathf.RoundToInt(source.hp * 1.02f);
+        source.damage = Mathf.RoundToInt(source.damage * 1.02f);
+        SceneManager.LoadScene(source.level);
     }
 
     public void selected()

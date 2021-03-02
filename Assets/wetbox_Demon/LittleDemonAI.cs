@@ -27,6 +27,12 @@ namespace Gamekit3D
         private MeleeWeapon weapon;
         bool attacking = false;
         bool inStagger = false;
+        bool interruptable = false;
+        bool wandering = false;
+        bool waiting = false;
+        public float rangeMod = 1f;
+        float timer;
+        float originalDetect;
 
         //sound
         public RandomAudioPlayer attackAudio;
@@ -41,7 +47,14 @@ namespace Gamekit3D
         public GameObject ragdollPrefab;
         public PlayerControlAlt player;
         public int xpWorth = 4;
-
+        public float wanderChance = .25f;
+        public float wanderThreshold = 3f;
+        public float wanderDistance = 5f;
+        public float waitChance = .25f;
+        public float maxWaitTime = .7f;
+        public float minWaitTime = .2f;
+        private float waitTime;
+        float waitStart;
         //private float range;
 
 
@@ -57,11 +70,47 @@ namespace Gamekit3D
             weapon.SetOwner(gameObject);
             player = GameObject.Find("arthur_custom").GetComponent<PlayerControlAlt>();
             scale();
+            timer = Time.time;
+            originalDetect = playerScanner.detectionRadius;
         }
 
         // Update is called once per frame
         void Update()
         {
+            //Debug.Log("time is " + Time.time + " and timer is " + timer);
+            if (Time.time - .5 > timer && !wandering && !attacking)
+            {
+                timer = Time.time;
+                if (Random.Range(0f, 1f) < wanderChance)
+                {
+                    wandering = true;
+                    playerScanner.detectionRadius = wanderThreshold;
+                    target = playerScanner.Detect(transform, "Player", m_Target == null);
+                    Vector3 randomDestination = new Vector3(transform.position.x + Random.Range(-wanderDistance, wanderDistance),
+                        transform.position.y, transform.position.z + Random.Range(-wanderDistance, wanderDistance));
+                    if (target == null) myAgent.SetDestination(randomDestination);
+                    else
+                    {
+                        playerScanner.detectionRadius = originalDetect;
+                        wandering = false;
+                    }
+                    anim.SetFloat("move", 1);
+                }
+                else if (Random.Range(0f, 1f) < wanderChance)
+                {
+                    playerScanner.detectionRadius = wanderThreshold;
+                    target = playerScanner.Detect(transform, "Player", m_Target == null);
+                    if (target == null)
+                    {
+                        waiting = true;
+                        waitTime = Random.Range(minWaitTime, maxWaitTime);
+                        myAgent.SetDestination(transform.position);
+                        waitStart = Time.time;
+                        anim.SetFloat("move", 0);
+                    }
+                    else playerScanner.detectionRadius = originalDetect;
+                }
+            }
             if (alive) FindTarget();
         }
 
@@ -87,21 +136,53 @@ namespace Gamekit3D
             //we ignore height difference if the target was already seen
             target = playerScanner.Detect(transform, "Player", m_Target == null);
             //Debug.Log("target is " + target);
-            //if (target != null) Debug.Log("distance is " + Vector3.Distance(transform.position, target.transform.position));
-            if (target != null && Vector3.Distance(transform.position, target.transform.position) > 1.5 && !attacking && !inStagger)
+
+
+            //first check if wandering
+            if (wandering)
+            {
+                if (!myAgent.hasPath || myAgent.velocity.sqrMagnitude == 0f || target != null)
+                {
+                    if (target == null)
+                    {
+                        waiting = true;
+                        waitTime = Random.Range(minWaitTime, maxWaitTime);
+                        myAgent.SetDestination(transform.position);
+                        waitStart = Time.time;
+                        anim.SetFloat("move", 0);
+                    }
+                    else playerScanner.detectionRadius = originalDetect;
+                    wandering = false;                    
+                    anim.SetFloat("move", 0);
+                }
+                else anim.SetFloat("move", 1);
+            }
+
+            else if (waiting)
+            {
+                if (target != null || Time.time > waitTime + waitStart )
+                {
+                    waiting = false;
+                    playerScanner.detectionRadius = originalDetect;
+                }
+            }
+
+            //move to target if its far away, not attacking, and not staggering
+            else if (target != null && Vector3.Distance(transform.position, target.transform.position) > (1.5 * rangeMod) && !attacking && !inStagger)
             {
                 //Debug.Log(target.transform.position);
                 myAgent.SetDestination(target.transform.position);
                 anim.SetFloat("move", 1);
 
             }
+            //if not staggering and close to the target
             else if (target != null && !inStagger)
             {
                 Quaternion targetAngle = Quaternion.LookRotation((target.transform.position - transform.position).normalized);
                 Quaternion rotat = Quaternion.RotateTowards(transform.rotation, targetAngle, 180 * Time.deltaTime);
                 transform.rotation = rotat;
-                //anim.SetFloat("turn", rotat);
-                if (!attacking && Vector3.Distance(transform.position, target.transform.position) < 1.5)
+                //if target is close, attack
+                if (!attacking && Vector3.Distance(transform.position, target.transform.position) < (1.5 * rangeMod))
                 {
                      if (myAgent.velocity != Vector3.zero) myAgent.SetDestination(transform.position);
                     anim.SetFloat("move", 0);
@@ -114,6 +195,7 @@ namespace Gamekit3D
                     attacking = true;
                 }
             }
+            //else standing still
             else anim.SetFloat("move", 0);
           
         }
@@ -126,6 +208,7 @@ namespace Gamekit3D
                 case Message.MessageType.DEAD:
                     //Death((Damageable.DamageMessage)msg);
                     GameObject ragdollInstance = Instantiate(ragdollPrefab, transform.position, transform.rotation);
+                    ragdollInstance.transform.localScale = transform.localScale;
                     player.awardXp(xpWorth);
                     Destroy(gameObject);
                     break;
@@ -133,6 +216,13 @@ namespace Gamekit3D
                     //ApplyDamage((Damageable.DamageMessage)msg);
                     //Debug.Log("demon hurt");
                     if (hitAudio != null && Random.Range(1,3) == 1) hitAudio.PlayRandomClip();
+                    if(interruptable)
+                    {
+                        interruptable = false;
+                        interruptHit();
+                    }
+
+
                     break;
                 default:
                     break;
@@ -149,7 +239,7 @@ namespace Gamekit3D
 
         public void damageEnd()
         {
-            Debug.Log("damage ended");
+            //Debug.Log("damage ended");
             weapon.EndAttack();
 
             //reduce attack count
@@ -193,6 +283,28 @@ namespace Gamekit3D
             anim.SetInteger("attacking", 0);
             //Debug.Log("demon state is  " + anim.GetInteger("moving"));
             weapon.EndAttack();
+        }
+
+        public void interruptHit()
+        {
+            attacking = false;
+            inStagger = true;
+            anim.SetBool("interrupt", true);
+            anim.SetInteger("attacking", 0);
+            //Debug.Log("demon state is  " + anim.GetInteger("moving"));
+            weapon.EndAttack();
+        }
+
+        public void setInterruptable(int set)
+        {
+            interruptable = (set == 1);
+            //Debug.Log("interruptable is " + interruptable);
+        }
+
+        public void endInterrupt()
+        {
+            anim.SetBool("interrupt", false);
+            
         }
 
         public void staggering()

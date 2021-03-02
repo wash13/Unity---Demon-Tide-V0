@@ -19,6 +19,8 @@ namespace Gamekit3D
         public AudioSource slamSound;
         public AudioSource blockSound;
         public AudioSource levelSound;
+        public ParticleSystem levelParticles;
+        public ParticleSystem blockParticles;
 
         private NavMeshAgent myAgent;
         private Animator anim;
@@ -31,6 +33,7 @@ namespace Gamekit3D
         private Damageable dam;
         private bool isCasting = false;
         public GameObject bolt;
+        public GameObject blockDamage;
         public GameObject targetCanvas;
         private bool moveToHit = false; //this is checking if an attack is queued
         public GameObject healthBar;
@@ -48,6 +51,7 @@ namespace Gamekit3D
         private int xpToLastLevel = 200;
         public int level = 1;
         public bool leveled = false;
+
 
         private playerStats stats;
 
@@ -70,6 +74,12 @@ namespace Gamekit3D
             manaBar = GameObject.Find("mana fill");
             manaBar.GetComponent<Image>().fillAmount = ((float)dam.curMana / (float)dam.maxMana);
             //stats = FindObjectOfType<playerStats>();
+
+            
+            var shape = blockParticles.shape;
+            shape.rotation = new Vector3(0, 90, (180 - (blockAngle / 2f)));
+            shape.arc = blockAngle;
+
         }
 
         // Update is called once per frame
@@ -88,7 +98,7 @@ namespace Gamekit3D
                 }
 
                 //blocking controller
-                if (Input.GetMouseButtonDown(1) && !anim.GetBool("Attacking"))
+                if ((Input.GetMouseButtonDown(1) || (Input.GetMouseButton(1) && !anim.GetBool("Blocking"))) && !anim.GetBool("Attacking"))
                 {
                     myAgent.SetDestination(transform.position);
                     rotateToPoint();
@@ -104,7 +114,7 @@ namespace Gamekit3D
                 
 
                 //movement / primary attack
-                if (Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftShift) && !anim.GetBool("Attacking") && !isBlocking && !isCasting)
+                if ((Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) && !Input.GetKey(KeyCode.LeftShift) && !anim.GetBool("Attacking") && !isBlocking && !isCasting)
                 {
                     //if in range of the target, 
                     float targetDistance = DistanceToTarget(targetCanvas.GetComponent<targetReference>().target);
@@ -128,6 +138,7 @@ namespace Gamekit3D
                         if (Physics.Raycast(movePoint, out hitInfo, 100, clickable))
                         {
                             myAgent.SetDestination(hitInfo.point);
+                            anim.SetBool("Moving", true);
                         }
                     }
                 }
@@ -208,7 +219,7 @@ namespace Gamekit3D
             }
         }
 
-        public float DistanceToTarget(InteractableGlow target)
+        public float DistanceToTarget(GameObject target)
         {
             if (target == null) return 100; //anything over a small number causes movement
             if (target.tag == "button") return 100;
@@ -222,6 +233,7 @@ namespace Gamekit3D
             dam = GetComponent<Damageable>();
             weapon = GetComponentInChildren<MeleeWeapon>();
             myAgent = GetComponent<NavMeshAgent>();
+
 
             stats = FindObjectOfType<playerStats>();
             stats.hp = dam.maxHitPoints;
@@ -242,6 +254,8 @@ namespace Gamekit3D
             dam = GetComponent<Damageable>();
             weapon = GetComponentInChildren<MeleeWeapon>();
             myAgent = GetComponent<NavMeshAgent>();
+
+
 
             Debug.Log("stat unpack " + stats);
             Debug.Log("damagable " + dam);
@@ -273,6 +287,11 @@ namespace Gamekit3D
                 if (dam.curMana > dam.maxMana) dam.curMana = dam.maxMana;
                 manaBar.GetComponent<Image>().fillAmount = ((float)dam.curMana / (float)dam.maxMana);
                 manaReady = false;
+
+                //now the damage portion.  same pacing as mana gain
+                //this is self-removing too
+                GameObject blockDamageInstance = Instantiate(blockDamage, transform.position, transform.rotation);
+                blockParticles.Stop();
             }
         }
 
@@ -293,7 +312,7 @@ namespace Gamekit3D
                 xpToNextLevel = xpToNextLevel + xpToLastLevel;
                 xpToLastLevel = temp;
                 leveled = true;
-                gameObject.GetComponentInChildren<ParticleSystem>().Play();
+                levelParticles.Play();
                 //Debug.Log(levelSound);
                 levelSound.Play();
             }
@@ -320,6 +339,7 @@ namespace Gamekit3D
             myAgent.SetDestination(transform.position);
             isBlocking = true;
             dam.hitAngle = (360 - blockAngle);
+            blockParticles.Play();
         }
 
         public void endBlock()
@@ -327,6 +347,7 @@ namespace Gamekit3D
             anim.SetBool("Blocking", false);
             isBlocking = false;
             dam.hitAngle = 360;
+            blockParticles.Stop();
         }
 
         public void endCast()
@@ -360,6 +381,7 @@ namespace Gamekit3D
         {
             //Debug.Log("bolt called");
             GameObject boltInstance = Instantiate(bolt, transform.position, transform.rotation);
+            boltInstance.GetComponent<MeleeWeapon>().damage = GetComponentInChildren<MeleeWeapon>().damage * 3;
             //Debug.Log(boltInstance);
             boltInstance.GetComponent<Rigidbody>().AddRelativeForce(0, 0, 500);
         }

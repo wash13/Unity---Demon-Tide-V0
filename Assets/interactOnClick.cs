@@ -17,14 +17,23 @@ public class interactOnClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (close && Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hitInfo;
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, 100, 1 << 13);
+            if (hitInfo.collider.name == this.name)   OnClick.Invoke();
+        }
     }
+
+
+    
+
 
     private void OnMouseOver()
     {
         if (Input.GetMouseButton(0) && close)
         { // if left button pressed...
-            OnClick.Invoke();
+            //OnClick.Invoke();
         }
     }
 

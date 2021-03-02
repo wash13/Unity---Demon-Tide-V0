@@ -19,7 +19,7 @@ public class playerStats : MonoBehaviour
         public bool thorns;
         public int manaGain;
         public float blockAngle;
-    
+    public float playerScale;
 
 
     // Start is called before the first frame update
@@ -34,5 +34,8 @@ public class playerStats : MonoBehaviour
         
     }
 
-
+    public void increaseScale()
+    {
+        playerScale += .02f;
+    }
 }
